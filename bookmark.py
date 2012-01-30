@@ -2,20 +2,15 @@
 
 
 """
-this executable looks at $0
-to determine which of 2 soft-linked names it is called as:
+the bookmarks are a stack
+bashrc cd's to the most recent bookmark.
 
-use "bookmark" to add a bookmark:
+if called with one arg that is not an option, bookmarks that path
 
-    if one arg, take it as a path and bookmark that
-    if zero args, bookmark the pwd
-
-use "bookmark_subtract" to
-
-    search for its one arg and erase it from the bookmarks list
-
-the bookmark list is stored as
-/var/
+valid options:
+  '-l' or '--list': cats bookmarks.txt (most recent catted last)
+  '-p' or '--pop': says the name of the most recent bookmark, and asks for confirmation to delete it
+  '--recentest': says the name of the most recent bookmast
 """
 
 
@@ -25,66 +20,73 @@ import subprocess # .call and .check_output
 
 
 # Constants. abspath is short for abspath to a file
-bookmark_absfile = '/Users/jon/Dropbox/git/bookmark/bookmarks.txt'
+bookmarks_file = '/Users/jon/Dropbox/git/bookmark/bookmarks.txt'
+
+
+# fns
+
+def b_add(rel_path):
+    abs_path = os.path.abspath(rel_path)
+    
+    # 'a' for append
+    with open(bookmarks_file, 'a') as fa:
+        fa.write(abs_path + '\n')
+
+def b_list():
+    subprocess.call(['cat', bookmarks_file])
+
+def b_confirm_then_pop():
+
+    with open(bookmarks_file, 'r') as fr:
+        
+        lines = fr.readlines()
+
+    if len(lines) <= 1:
+        
+        print "can't delete the '~' entry because we need a home directory."
+        return
+
+
+    print "really delete this entry?"
+    print lines[-1]
+
+    yn = raw_input('y/n: ')
+    if yn == 'y':
+
+        with open(bookmarks_file, 'w') as fw:
+            
+            for line in lines[:-1]:
+                
+                fw.write(line) # line includes the \n
+
+        print "deleted!"
+
+# end def
+
+def b_print_recentest():
+
+    with open(bookmarks_file, 'r') as fr:
+        
+        lines = fr.readlines()
+        print lines[-1]
 
 
 ###
 # Action Jackson
+#
+#  The below code is beeeauuutiful. :)
 
-pathed_action = sys.argv[0]
-action = os.path.basename(pathed_action)
-
-assert action in ['bookmark', 'bookmark_subtract']
-
-
-###
-# TODO put this class on the modules path
-
-class StringListOutOfBoundsNone():
-    
-    string_list = None
-    
-    def __init__(self, string_list):
-        """
-        e.g. string_list can be sys.argv
-        """
-
-        self.string_list = string_list
-    # end init
-
-    # [] getter
-    def __getitem__(self, i):
-        """
-        sheer awesomeness below:
-        """
+if len(sys.argv) == 2:
         
-        # TODO test
-        fails = [
-                not isinstance(i, int),
-                i < 0,
-                i >= len(string_list)]
+    if sys.argv[1] in ['-l', '--list']:
+        b_list()
 
-        for fail in fails:
-            if fail == true:
-                return None
+    elif sys.argv[1] in ['-p', '--pop']:
+        b_confirm_then_pop()
 
-        return string_list[i]
-    # BABOOM! Some of my favorite code there :)
+    elif sys.argv[1] in ['--recentest']:
+        b_print_recentest()
 
-# end class
+    else:
+        b_add(sys.argv[1])
 
-
-###
-
-
-
-
-raise NotImplementedError
-
-
-
-if true:
-    print 'hi'
-relpath_to_bookmark = sys.argv[1]
-
-file_to_bookmark = os.path.abspath()
