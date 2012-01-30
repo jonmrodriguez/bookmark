@@ -90,3 +90,11 @@ if len(sys.argv) == 2:
     else:
         b_add(sys.argv[1])
 
+elif len(sys.argv) == 1:
+    
+    # rookie mistake to try to use 'bookmark' to add. The correct usage is 'bookmark .'
+
+    print "warning: did you mean 'bookmark .'?"
+
+# done, woot!
+
