@@ -11,6 +11,7 @@ valid options:
   '-l' or '--list': cats bookmarks.txt (most recent catted last)
   '-p' or '--pop': says the name of the most recent bookmark, and asks for confirmation to delete it
   '--recentest': says the name of the most recent bookmast
+  '--edit': opens bookmarks_file in the user's editor (just uses mac open, but TODO use the VISUAL or EDITOR variables)
 """
 
 
@@ -70,6 +71,14 @@ def b_print_recentest():
         lines = fr.readlines()
         print lines[-1]
 
+# end def
+
+def b_editor():
+    
+    subprocess.call(['open', bookmarks_file])
+
+# end def
+
 
 ###
 # Action Jackson
@@ -86,6 +95,9 @@ if len(sys.argv) == 2:
 
     elif sys.argv[1] in ['--recentest']:
         b_print_recentest()
+
+    elif sys.argv[1] in ['--edit']:
+        b_editor()
 
     else:
         b_add(sys.argv[1])
