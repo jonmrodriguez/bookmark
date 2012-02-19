@@ -1,9 +1,0 @@
-/Users/jon
-/Users/jon/gitolite/cv/ar/
-/Users/jon/Dropbox/git/bookmark
-/Users/jon/sandbox
-/Users/jon/LocalStorage/deeper/VergenceLabs/cv/ar
-/Users/jon/LocalStorage/deeper/VergenceLabs/non_gitolite/radiant-moon-4808
-/Users/jon/LocalStorage/deeper/VergenceLabs/cv/ar
-/Applications/MAMP/htdocs
-/Users/jon/LocalStorage/deeper/VergenceLabs/cv/ar
