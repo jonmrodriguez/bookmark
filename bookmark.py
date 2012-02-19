@@ -21,7 +21,8 @@ import subprocess # .call and .check_output
 
 
 # Constants. TODO rely on $DG instead of abspaths, universally
-bookmarks_file = '/Users/jon/Dropbox/git/bookmark/bookmarks.txt'
+DG = os.environ['DG']
+bookmarks_file = DG + '/bookmark/bookmarks.txt'
 
 
 # fns
