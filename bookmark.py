@@ -16,11 +16,11 @@ valid options:
 
 
 import sys # sys.argv
-import os # os.system
+import os # os.system and os.environ
 import subprocess # .call and .check_output
 
 
-# Constants. abspath is short for abspath to a file
+# Constants. TODO rely on $DG instead of abspaths, universally
 bookmarks_file = '/Users/jon/Dropbox/git/bookmark/bookmarks.txt'
 
 
@@ -75,7 +75,7 @@ def b_print_recentest():
 
 def b_editor():
     
-    subprocess.call(['open', bookmarks_file])
+    subprocess.call([os.environ['VISUAL'], bookmarks_file])
 
 # end def
 
